@@ -14,50 +14,65 @@
   id="navbar"
   class="sticky top-0 z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur border-b border-gray-200 dark:border-gray-800 transition"
 >
-  <div class="flex items-center gap-2">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center h-16">
+      <!-- Logo/Brand -->
+      <div class="flex-shrink-0 flex items-center">
+        <span class="text-xl font-bold text-indigo-600 dark:text-indigo-400">SaaSify</span>
+      </div>
 
-  <!-- Dark Mode Toggle (always visible) -->
-  <button
-    id="theme-toggle"
-    class="rounded-md p-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
-    title="Toggle dark mode"
-  >
-    🌙
-  </button>
+      <!-- Desktop Navigation -->
+      <nav class="hidden md:flex space-x-8">
+        <a href="#" class="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 px-3 py-2 text-sm font-medium transition">Features</a>
+        <a href="#" class="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 px-3 py-2 text-sm font-medium transition">Pricing</a>
+        <a href="#" class="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 px-3 py-2 text-sm font-medium transition">Docs</a>
+      </nav>
 
-  <!-- Desktop CTA -->
-  <div class="hidden md:flex items-center gap-4">
-    <a href="#"
-      class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">
-      Sign in
-    </a>
-    <a href="#"
-      class="rounded-md bg-indigo-600 px-4 py-2 text-sm font-semibold text-white hover:bg-indigo-500 transition">
-      Get started
-    </a>
+      <div class="flex items-center gap-4">
+        <!-- Dark Mode Toggle -->
+        <button
+          id="theme-toggle"
+          class="rounded-md p-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition"
+          title="Toggle dark mode"
+        >
+          <span class="dark:hidden">🌙</span>
+          <span class="hidden dark:inline">☀️</span>
+        </button>
+
+        <!-- Desktop CTA -->
+        <div class="hidden md:flex items-center gap-4">
+          <a href="#" class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition">
+            Sign in
+          </a>
+          <a href="#" class="rounded-md bg-indigo-600 px-4 py-2 text-sm font-semibold text-white hover:bg-indigo-500 shadow-sm transition">
+            Get started
+          </a>
+        </div>
+
+        <!-- Mobile menu button -->
+        <button
+          id="menu-btn"
+          class="md:hidden rounded-md p-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition"
+        >
+          <span class="sr-only">Open main menu</span>
+          <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+          </svg>
+        </button>
+      </div>
+    </div>
   </div>
-
-  <!-- Mobile menu button -->
-  <button
-    id="menu-btn"
-    class="md:hidden rounded-md p-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
-  >
-    ☰
-  </button>
-
-</div>
 
 
   <!-- Mobile Menu -->
-  <div id="mobile-menu" class="md:hidden hidden border-t bg-white dark:bg-gray-900">
-    <div class="px-4 py-4 space-y-3">
-      <a class="block text-sm text-gray-700 dark:text-gray-300">Features</a>
-      <a class="block text-sm text-gray-700 dark:text-gray-300">Pricing</a>
-      <a class="block text-sm text-gray-700 dark:text-gray-300">Docs</a>
-
-      <div class="pt-3 border-t border-gray-200 dark:border-gray-800">
-        <a class="block text-sm text-gray-700 dark:text-gray-300">Sign in</a>
-        <a class="mt-2 block rounded-md bg-indigo-600 px-4 py-2 text-center text-sm font-semibold text-white">
+  <div id="mobile-menu" class="md:hidden hidden bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800">
+    <div class="px-4 pt-2 pb-6 space-y-1">
+      <a href="#" class="block px-3 py-4 text-base font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg transition">Features</a>
+      <a href="#" class="block px-3 py-4 text-base font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg transition">Pricing</a>
+      <a href="#" class="block px-3 py-4 text-base font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg transition">Docs</a>
+      <div class="pt-4 mt-4 border-t border-gray-200 dark:border-gray-800">
+        <a href="#" class="block px-3 py-4 text-base font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg transition">Sign in</a>
+        <a href="#" class="mt-4 block w-full rounded-lg bg-indigo-600 px-4 py-4 text-center text-base font-semibold text-white shadow-lg shadow-indigo-500/25">
           Get started
         </a>
       </div>
@@ -66,38 +81,71 @@
 </header>
 
 <!-- ================= HERO ================= -->
-<section class="py-24 text-center">
-  <div class="max-w-3xl mx-auto px-4">
-    <span class="inline-block mb-4 rounded-full bg-indigo-100 px-4 py-1 text-sm font-medium text-indigo-600">
+<section class="relative overflow-hidden py-24 sm:py-32">
+  <div class="absolute inset-0 -z-10 bg-[radial-gradient(45rem_50rem_at_top,theme(colors.indigo.100),white)] dark:bg-[radial-gradient(45rem_50rem_at_top,theme(colors.indigo.950),theme(colors.gray.950))] opacity-20"></div>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <div class="inline-flex items-center gap-2 rounded-full bg-indigo-50 dark:bg-indigo-900/30 px-3 py-1 text-sm font-medium text-indigo-600 dark:text-indigo-400 ring-1 ring-inset ring-indigo-600/10 mb-8">
+      <span class="relative flex h-2 w-2">
+        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
+        <span class="relative inline-flex rounded-full h-2 w-2 bg-indigo-500"></span>
+      </span>
       🚀 Launch your SaaS faster
-    </span>
+    </div>
 
-    <h1 class="text-4xl md:text-6xl font-extrabold text-gray-900 dark:text-white">
-      Build your SaaS faster<br />with a modern UI foundation
+    <h1 class="text-5xl md:text-7xl font-bold tracking-tight text-gray-900 dark:text-white mb-6">
+      Build your SaaS with a <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-violet-600">modern foundation</span>
     </h1>
 
-    <p class="mt-6 text-lg text-gray-600 dark:text-gray-400">
-      Clean, scalable, production-ready Tailwind UI for SaaS founders.
+    <p class="max-w-2xl mx-auto text-xl text-gray-600 dark:text-gray-400 mb-10 leading-relaxed">
+      Clean, scalable, and production-ready Tailwind UI components. Stop wasting time on boilerplate and start building your product.
     </p>
 
-    <div class="mt-8 flex flex-col sm:flex-row justify-center gap-4">
-      <a class="rounded-md bg-indigo-600 px-8 py-3 text-white font-semibold">Get started</a>
-      <a class="rounded-md border px-8 py-3 text-gray-700 dark:text-gray-300">Live demo</a>
+    <div class="flex flex-col sm:flex-row justify-center gap-4">
+      <a href="#" class="rounded-lg bg-indigo-600 px-8 py-4 text-white font-semibold shadow-lg shadow-indigo-500/25 hover:bg-indigo-500 transition-all hover:-translate-y-1">
+        Start Building Now
+      </a>
+      <a href="#" class="rounded-lg border border-gray-300 dark:border-gray-700 px-8 py-4 text-gray-700 dark:text-gray-300 font-semibold hover:bg-gray-50 dark:hover:bg-gray-800 transition-all">
+        View Live Demo
+      </a>
     </div>
   </div>
 </section>
 
 <!-- ================= FEATURES ================= -->
-<section class="bg-white dark:bg-gray-900 py-24">
-  <div class="max-w-7xl mx-auto px-4 grid gap-8 md:grid-cols-3">
-    <div class="p-6 border rounded-xl dark:border-gray-800">
-      ⚡ <h3 class="mt-4 font-semibold text-gray-900 dark:text-white">Fast Development</h3>
+<section class="py-24 bg-gray-50 dark:bg-gray-950/50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-16">
+      <h2 class="text-3xl font-bold text-gray-900 dark:text-white sm:text-4xl">Everything you need</h2>
+      <p class="mt-4 text-lg text-gray-600 dark:text-gray-400">Packed with features to help you launch in days, not months.</p>
     </div>
-    <div class="p-6 border rounded-xl dark:border-gray-800">
-      🎨 <h3 class="mt-4 font-semibold text-gray-900 dark:text-white">Modern Design</h3>
-    </div>
-    <div class="p-6 border rounded-xl dark:border-gray-800">
-      📈 <h3 class="mt-4 font-semibold text-gray-900 dark:text-white">Scalable UI</h3>
+
+    <div class="grid gap-8 md:grid-cols-3">
+      <!-- Feature 1 -->
+      <div class="group p-8 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl hover:border-indigo-500 dark:hover:border-indigo-500 transition-all duration-300 shadow-sm hover:shadow-xl">
+        <div class="w-12 h-12 bg-indigo-100 dark:bg-indigo-900/50 rounded-lg flex items-center justify-center text-indigo-600 dark:text-indigo-400 mb-6 group-hover:scale-110 transition-transform">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+        </div>
+        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">Lightning Fast</h3>
+        <p class="text-gray-600 dark:text-gray-400 leading-relaxed">Built for performance with the latest Tailwind CSS v4 features.</p>
+      </div>
+
+      <!-- Feature 2 -->
+      <div class="group p-8 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl hover:border-indigo-500 dark:hover:border-indigo-500 transition-all duration-300 shadow-sm hover:shadow-xl">
+        <div class="w-12 h-12 bg-purple-100 dark:bg-purple-900/50 rounded-lg flex items-center justify-center text-purple-600 dark:text-purple-400 mb-6 group-hover:scale-110 transition-transform">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z"/></svg>
+        </div>
+        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">Modular Design</h3>
+        <p class="text-gray-600 dark:text-gray-400 leading-relaxed">Highly customizable components that adapt to your brand identity.</p>
+      </div>
+
+      <!-- Feature 3 -->
+      <div class="group p-8 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl hover:border-indigo-500 dark:hover:border-indigo-500 transition-all duration-300 shadow-sm hover:shadow-xl">
+        <div class="w-12 h-12 bg-emerald-100 dark:bg-emerald-900/50 rounded-lg flex items-center justify-center text-emerald-600 dark:text-emerald-400 mb-6 group-hover:scale-110 transition-transform">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+        </div>
+        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">Secure by Default</h3>
+        <p class="text-gray-600 dark:text-gray-400 leading-relaxed">Best practices for security and accessibility baked right in.</p>
+      </div>
     </div>
   </div>
 </section>
@@ -138,10 +186,23 @@
   });
 
   // dark mode
-  document.getElementById("theme-toggle")
-    .addEventListener("click", () =>
-      document.documentElement.classList.toggle("dark")
-    );
+  const themeToggle = document.getElementById("theme-toggle");
+  
+  // Check for saved theme preference or use system preference
+  if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+    document.documentElement.classList.add('dark');
+  } else {
+    document.documentElement.classList.remove('dark');
+  }
+
+  themeToggle.addEventListener("click", () => {
+    document.documentElement.classList.toggle("dark");
+    if (document.documentElement.classList.contains("dark")) {
+      localStorage.setItem('theme', 'dark');
+    } else {
+      localStorage.setItem('theme', 'light');
+    }
+  });
 </script>
 
 </body>
