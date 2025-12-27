@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en" class="">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SaaS UI Foundation</title>
+  <link href="../dist/output.css" rel="stylesheet">
+</head>
+
+<body class="bg-gray-50 dark:bg-gray-950 transition-colors">
+
+<!-- ================= HEADER / NAVBAR ================= -->
+<header
+  id="navbar"
+  class="sticky top-0 z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur border-b border-gray-200 dark:border-gray-800 transition"
+>
+  <div class="flex items-center gap-2">
+
+  <!-- Dark Mode Toggle (always visible) -->
+  <button
+    id="theme-toggle"
+    class="rounded-md p-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
+    title="Toggle dark mode"
+  >
+    🌙
+  </button>
+
+  <!-- Desktop CTA -->
+  <div class="hidden md:flex items-center gap-4">
+    <a href="#"
+      class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">
+      Sign in
+    </a>
+    <a href="#"
+      class="rounded-md bg-indigo-600 px-4 py-2 text-sm font-semibold text-white hover:bg-indigo-500 transition">
+      Get started
+    </a>
+  </div>
+
+  <!-- Mobile menu button -->
+  <button
+    id="menu-btn"
+    class="md:hidden rounded-md p-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
+  >
+    ☰
+  </button>
+
+</div>
+
+
+  <!-- Mobile Menu -->
+  <div id="mobile-menu" class="md:hidden hidden border-t bg-white dark:bg-gray-900">
+    <div class="px-4 py-4 space-y-3">
+      <a class="block text-sm text-gray-700 dark:text-gray-300">Features</a>
+      <a class="block text-sm text-gray-700 dark:text-gray-300">Pricing</a>
+      <a class="block text-sm text-gray-700 dark:text-gray-300">Docs</a>
+
+      <div class="pt-3 border-t border-gray-200 dark:border-gray-800">
+        <a class="block text-sm text-gray-700 dark:text-gray-300">Sign in</a>
+        <a class="mt-2 block rounded-md bg-indigo-600 px-4 py-2 text-center text-sm font-semibold text-white">
+          Get started
+        </a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ================= HERO ================= -->
+<section class="py-24 text-center">
+  <div class="max-w-3xl mx-auto px-4">
+    <span class="inline-block mb-4 rounded-full bg-indigo-100 px-4 py-1 text-sm font-medium text-indigo-600">
+      🚀 Launch your SaaS faster
+    </span>
+
+    <h1 class="text-4xl md:text-6xl font-extrabold text-gray-900 dark:text-white">
+      Build your SaaS faster<br />with a modern UI foundation
+    </h1>
+
+    <p class="mt-6 text-lg text-gray-600 dark:text-gray-400">
+      Clean, scalable, production-ready Tailwind UI for SaaS founders.
+    </p>
+
+    <div class="mt-8 flex flex-col sm:flex-row justify-center gap-4">
+      <a class="rounded-md bg-indigo-600 px-8 py-3 text-white font-semibold">Get started</a>
+      <a class="rounded-md border px-8 py-3 text-gray-700 dark:text-gray-300">Live demo</a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FEATURES ================= -->
+<section class="bg-white dark:bg-gray-900 py-24">
+  <div class="max-w-7xl mx-auto px-4 grid gap-8 md:grid-cols-3">
+    <div class="p-6 border rounded-xl dark:border-gray-800">
+      ⚡ <h3 class="mt-4 font-semibold text-gray-900 dark:text-white">Fast Development</h3>
+    </div>
+    <div class="p-6 border rounded-xl dark:border-gray-800">
+      🎨 <h3 class="mt-4 font-semibold text-gray-900 dark:text-white">Modern Design</h3>
+    </div>
+    <div class="p-6 border rounded-xl dark:border-gray-800">
+      📈 <h3 class="mt-4 font-semibold text-gray-900 dark:text-white">Scalable UI</h3>
+    </div>
+  </div>
+</section>
+
+<!-- ================= STATS ================= -->
+<section class="py-24 text-center">
+  <div class="max-w-7xl mx-auto px-4 grid grid-cols-2 md:grid-cols-4 gap-8">
+    <div><div class="text-4xl font-bold text-indigo-600">10k+</div>Users</div>
+    <div><div class="text-4xl font-bold text-indigo-600">99.9%</div>Uptime</div>
+    <div><div class="text-4xl font-bold text-indigo-600">120+</div>Countries</div>
+    <div><div class="text-4xl font-bold text-indigo-600">500+</div>Teams</div>
+  </div>
+</section>
+
+<!-- ================= CTA ================= -->
+<section class="bg-indigo-600 py-24 text-center text-white">
+  <h2 class="text-4xl font-extrabold">Ready to build?</h2>
+  <p class="mt-4 text-indigo-100">Start building today.</p>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer class="bg-gray-900 text-gray-400 py-12 text-center">
+  © 2025 SaaSify
+</footer>
+
+<!-- ================= SCRIPTS ================= -->
+<script>
+  // mobile menu
+  document.getElementById("menu-btn")
+    .addEventListener("click", () =>
+      document.getElementById("mobile-menu").classList.toggle("hidden")
+    );
+
+  // navbar shadow
+  const navbar = document.getElementById("navbar");
+  window.addEventListener("scroll", () => {
+    navbar.classList.toggle("shadow-sm", window.scrollY > 10);
+  });
+
+  // dark mode
+  document.getElementById("theme-toggle")
+    .addEventListener("click", () =>
+      document.documentElement.classList.toggle("dark")
+    );
+</script>
+
+</body>
+</html>
