@@ -1,0 +1,35 @@
+PHASE 1 — FOUNDATION & POSITIONING
+
+📆 26 Des 2025 – 31 Jan 2026
+
+🎯 Target: Siap jual diri mahal
+
+Action:
+
+Tentukan 1 niche jelas (SaaS / dashboard / internal tools)
+
+Kuasai:
+
+Tailwind CSS (advance)
+
+UI UX implementation (Figma → Code)
+
+Clean architecture frontend
+
+Bangun:
+
+2 portfolio REAL (fake client boleh tapi terlihat real)
+
+1 landing page personal
+
+Output wajib:
+
+Portfolio live
+
+GitHub rapi
+
+Headline kuat:
+
+Frontend Developer helping SaaS founders ship fast & scalable dashboards
+
+💰 Income target: 0–5 jt (masih wajar)

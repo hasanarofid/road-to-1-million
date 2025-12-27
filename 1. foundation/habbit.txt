@@ -1,0 +1,126 @@
+DAILY TASK PEMULA (SENIN – MINGGU)
+🔵 SENIN — SETUP & LEARNING
+
+🎯 Fokus: Fondasi skill + positioning
+
+Belajar Tailwind (layout, spacing, responsive)
+
+Clone 1 UI dari Figma / Dribbble
+
+Catat reusable class / pattern
+
+1 commit ke GitHub
+
+⏱️ 4–5 jam
+
+🟢 SELASA — BUILD PORTFOLIO
+
+🎯 Fokus: Bikin bukti, bukan teori
+
+Bangun 1 feature portfolio:
+
+Auth page
+
+Dashboard layout
+
+CRUD form
+
+Deploy (Vercel)
+
+Screenshot hasil
+
+⏱️ 4–6 jam
+
+🟡 RABU — SALES LIGHT
+
+🎯 Fokus: Mulai kelihatan
+
+Kirim 3–5 proposal Upwork
+
+Optimasi 1 paragraf profile
+
+Follow-up 2 proposal lama
+
+Save job yang menarik
+
+⏱️ 3–4 jam
+
+🟣 KAMIS — CASE STUDY DAY
+
+🎯 Fokus: Bikin kamu terlihat profesional
+
+Tulis studi kasus singkat:
+
+Problem
+
+Solusi
+
+Tech stack
+
+Update README portfolio
+
+Rapikan folder & naming
+
+⏱️ 3–5 jam
+
+🟠 JUMAT — MICRO LEARNING + PRACTICE
+
+🎯 Fokus: Skill yang kepakai langsung
+
+Belajar:
+
+API integration
+
+Error handling
+
+Implement langsung di portfolio
+
+Commit + deploy
+
+⏱️ 4–5 jam
+
+🔴 SABTU — PERSONAL BRANDING RINGAN
+
+🎯 Fokus: Nabung trust
+
+Post 1 konten ringan:
+
+“Learning progress”
+
+“Today I built…”
+
+Update LinkedIn headline
+
+Connect 10 orang relevan
+
+⏱️ 2–3 jam
+
+⚪ MINGGU — REVIEW & RESET
+
+🎯 Fokus: Jangan burnout
+
+Review:
+
+Apa yang dipelajari
+
+Progress portfolio
+
+Planning minggu depan
+
+❌ Tidak push diri
+
+⏱️ 1–2 jam
+
+📈 KPI BULAN 1–2 (REALISTIS)
+
+Kalau ini tercapai, kamu on-track:
+
+Portfolio live: 2
+
+Proposal terkirim: 40–60
+
+Reply rate: >10%
+
+Interview: 1–3
+
+Client pertama: 1
