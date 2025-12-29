@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Inventory | OpsCenter</title>
+  <link href="../../../dist/output.css" rel="stylesheet">
+  <script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+  <script src="../js/app.js"></script>
+  <style>
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+    .dark ::-webkit-scrollbar-thumb { background: #334155; }
+  </style>
+</head>
+<body class="h-full bg-slate-50 dark:bg-slate-950 transition-colors text-slate-900 dark:text-slate-100 font-sans">
+
+<div class="flex h-full overflow-hidden relative">
+  <main class="flex-1 flex flex-col min-w-0 overflow-hidden">
+    <!-- Content injected by app.js -->
+    <div class="flex-1 overflow-y-auto p-4 sm:p-8">
+      <div class="max-w-7xl mx-auto space-y-8">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div class="bg-indigo-600 rounded-2xl p-6 text-white shadow-lg shadow-indigo-600/20">
+            <p class="text-indigo-100 text-sm font-medium">In Production</p>
+            <h3 class="text-3xl font-bold mt-1">128 Items</h3>
+          </div>
+          <div class="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm">
+            <p class="text-slate-500 text-sm font-medium">Quality Check</p>
+            <h3 class="text-3xl font-bold mt-1">24 Items</h3>
+          </div>
+          <div class="hidden lg:block bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm">
+            <p class="text-slate-500 text-sm font-medium">Ready to Ship</p>
+            <h3 class="text-3xl font-bold mt-1">842 Items</h3>
+          </div>
+        </div>
+
+        <div class="flex overflow-x-auto pb-4 gap-6 -mx-4 px-4 sm:mx-0 sm:px-0 lg:grid lg:grid-cols-4 lg:overflow-visible">
+          <div class="min-w-[280px] space-y-4">
+            <div class="flex items-center justify-between px-2">
+              <h4 class="text-sm font-bold uppercase tracking-wider text-slate-500">Requested</h4>
+              <span class="bg-slate-200 dark:bg-slate-800 px-2 py-0.5 rounded-full text-[10px] font-bold">12</span>
+            </div>
+            <div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+              <h5 class="text-sm font-bold">MacBook Air M3 Bulk</h5>
+              <p class="text-xs text-slate-500 mt-1">Logistics Team</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script>
+  OpsCenter.renderSidebar('inventory');
+  OpsCenter.renderHeader('Inventory');
+  OpsCenter.initInteractions();
+</script>
+</body>
+</html>

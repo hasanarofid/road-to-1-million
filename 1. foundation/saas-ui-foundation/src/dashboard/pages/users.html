@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Users | OpsCenter</title>
+  <link href="../../../dist/output.css" rel="stylesheet">
+  <script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+  <script src="../js/app.js"></script>
+  <style>
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+    .dark ::-webkit-scrollbar-thumb { background: #334155; }
+  </style>
+</head>
+<body class="h-full bg-slate-50 dark:bg-slate-950 transition-colors text-slate-900 dark:text-slate-100 font-sans">
+
+<div class="flex h-full overflow-hidden relative">
+  <main class="flex-1 flex flex-col min-w-0 overflow-hidden">
+    <div class="flex-1 overflow-y-auto p-4 sm:p-8">
+      <div class="max-w-7xl mx-auto space-y-6">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div class="flex items-center gap-3 flex-1 max-w-md">
+            <div class="relative w-full">
+              <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400">
+                <i class="ph-bold ph-magnifying-glass"></i>
+              </span>
+              <input type="text" placeholder="Search..." class="block w-full pl-10 pr-3 py-2 border border-slate-200 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-sm focus:ring-2 focus:ring-indigo-500 outline-none transition">
+            </div>
+          </div>
+          <button class="flex items-center justify-center gap-2 px-6 py-2.5 bg-indigo-600 text-white rounded-lg text-sm font-bold hover:bg-indigo-500 transition shadow-lg shadow-indigo-500/25">
+            <i class="ph-bold ph-plus"></i>
+            Add User
+          </button>
+        </div>
+
+        <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+          <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse min-w-[600px]">
+              <thead>
+                <tr class="bg-slate-50 dark:bg-slate-800/50">
+                  <th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase">User</th>
+                  <th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase">Role</th>
+                  <th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase text-right">Actions</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+                <tr class="hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition">
+                  <td class="px-6 py-4">
+                    <div class="flex items-center gap-3">
+                      <img src="https://i.pravatar.cc/150?u=1" class="w-10 h-10 rounded-full" alt="User">
+                      <div>
+                        <p class="text-sm font-bold">Sarah Jenkins</p>
+                        <p class="text-xs text-slate-500">sarah.j@company.com</p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="px-6 py-4">
+                    <span class="px-2 py-1 bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400 rounded-md text-xs font-bold">Project Manager</span>
+                  </td>
+                  <td class="px-6 py-4 text-right">
+                    <button class="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition">
+                      <i class="ph-bold ph-dots-three-outline text-lg"></i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script>
+  OpsCenter.renderSidebar('users');
+  OpsCenter.renderHeader('User Management');
+  OpsCenter.initInteractions();
+</script>
+</body>
+</html>
