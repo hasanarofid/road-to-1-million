@@ -1,0 +1,12 @@
+# 1. Development (Lokal Supabase CLI)
+# Buat file: .env.development
+VITE_SUPABASE_URL=http://127.0.0.1:54321
+VITE_SUPABASE_ANON_KEY=your-local-anon-key
+VITE_API_URL=http://localhost:3000/api
+
+# 2. Production (Supabase Cloud)
+# Buat file: .env.production
+VITE_SUPABASE_URL=https://xxxxxxxxxxxxxxxxxxxx.supabase.co
+VITE_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+VITE_API_URL=/api
+

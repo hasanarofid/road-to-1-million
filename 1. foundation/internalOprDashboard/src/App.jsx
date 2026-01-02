@@ -1,5 +1,6 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import DashboardLayout from './layouts/DashboardLayout';
+import LandingPage from './pages/LandingPage';
 import Overview from './pages/Overview';
 import Users from './pages/Users';
 import Inventory from './pages/Inventory';
@@ -9,26 +10,39 @@ import Roles from './pages/Roles';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import { ThemeProvider } from './context/ThemeContext';
+import { AuthProvider, useAuth } from './context/AuthContext';
+
+// Protected Route Component
+const ProtectedRoute = ({ children }) => {
+  const { user } = useAuth();
+  if (!user) return <Navigate to="/login" replace />;
+  return children;
+};
 
 function App() {
   return (
     <ThemeProvider>
-      <Routes>
-        {/* Auth Routes */}
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
+      <AuthProvider>
+        <Routes>
+          {/* Public Route */}
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
 
-        {/* Dashboard Routes */}
-        <Route element={<DashboardLayout />}>
-          <Route path="/" element={<Navigate to="/overview" replace />} />
-          <Route path="/overview" element={<Overview />} />
-          <Route path="/users" element={<Users />} />
-          <Route path="/inventory" element={<Inventory />} />
-          <Route path="/audit-logs" element={<AuditLogs />} />
-          <Route path="/orders" element={<Orders />} />
-          <Route path="/roles" element={<Roles />} />
-        </Route>
-      </Routes>
+          {/* Protected Dashboard Routes */}
+          <Route element={<ProtectedRoute><DashboardLayout /></ProtectedRoute>}>
+            <Route path="/overview" element={<Overview />} />
+            <Route path="/users" element={<Users />} />
+            <Route path="/inventory" element={<Inventory />} />
+            <Route path="/audit-logs" element={<AuditLogs />} />
+            <Route path="/orders" element={<Orders />} />
+            <Route path="/roles" element={<Roles />} />
+          </Route>
+
+          {/* Fallback */}
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </AuthProvider>
     </ThemeProvider>
   );
 }

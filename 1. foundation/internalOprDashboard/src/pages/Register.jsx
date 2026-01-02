@@ -1,25 +1,63 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Lightning, Envelope, Lock, User, Eye, EyeSlash } from '@phosphor-icons/react';
+import { useAuth } from '../context/AuthContext';
 
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [formData, setFormData] = useState({
+    fullName: '',
+    email: '',
+    password: ''
+  });
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const { signUp } = useAuth();
+  const navigate = useNavigate();
+
+  const handleRegister = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError(null);
+
+    const { data, error } = await signUp({
+      email: formData.email,
+      password: formData.password,
+      options: {
+        data: {
+          full_name: formData.fullName,
+          role: 'pelanggan', // Default role untuk registrasi publik
+        }
+      }
+    });
+
+    if (error) {
+      setError(error.message);
+      setLoading(false);
+    } else {
+      alert('Registration successful! Please check your email for verification.');
+      navigate('/login');
+    }
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-slate-950 p-4 transition-colors">
       <div className="w-full max-w-md">
-        {/* Logo & Header */}
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-12 h-12 bg-indigo-600 rounded-xl text-white mb-4 shadow-lg shadow-indigo-600/20">
+          <Link to="/" className="inline-flex items-center justify-center w-12 h-12 bg-indigo-600 rounded-xl text-white mb-4 shadow-lg shadow-indigo-600/20">
             <Lightning weight="bold" className="text-2xl" />
-          </div>
-          <h1 className="text-2xl font-bold text-slate-900 dark:text-white">Create Account</h1>
-          <p className="text-slate-500 dark:text-slate-400 mt-2">Start managing your operations more efficiently</p>
+          </Link>
+          <h1 className="text-2xl font-bold text-slate-900 dark:text-white">Daftar Pelanggan</h1>
+          <p className="text-slate-500 dark:text-slate-400 mt-2">Buat akun untuk mulai menggunakan layanan kami</p>
         </div>
 
-        {/* Card */}
         <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-8 shadow-sm">
-          <form className="space-y-5" onSubmit={(e) => e.preventDefault()}>
+          <form className="space-y-5" onSubmit={handleRegister}>
+            {error && (
+              <div className="p-3 bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 text-xs font-bold rounded-lg border border-red-100 dark:border-red-800">
+                {error}
+              </div>
+            )}
             <div>
               <label className="block text-sm font-semibold mb-2">Full Name</label>
               <div className="relative">
@@ -28,7 +66,10 @@ const Register = () => {
                 </span>
                 <input 
                   type="text" 
+                  value={formData.fullName}
+                  onChange={(e) => setFormData({...formData, fullName: e.target.value})}
                   placeholder="John Doe" 
+                  required
                   className="block w-full pl-10 pr-3 py-2.5 border border-slate-200 dark:border-slate-700 rounded-xl bg-slate-50 dark:bg-slate-800 text-sm focus:ring-2 focus:ring-indigo-500 outline-none transition"
                 />
               </div>
@@ -42,7 +83,10 @@ const Register = () => {
                 </span>
                 <input 
                   type="email" 
+                  value={formData.email}
+                  onChange={(e) => setFormData({...formData, email: e.target.value})}
                   placeholder="name@company.com" 
+                  required
                   className="block w-full pl-10 pr-3 py-2.5 border border-slate-200 dark:border-slate-700 rounded-xl bg-slate-50 dark:bg-slate-800 text-sm focus:ring-2 focus:ring-indigo-500 outline-none transition"
                 />
               </div>
@@ -56,7 +100,10 @@ const Register = () => {
                 </span>
                 <input 
                   type={showPassword ? "text" : "password"} 
+                  value={formData.password}
+                  onChange={(e) => setFormData({...formData, password: e.target.value})}
                   placeholder="••••••••" 
+                  required
                   className="block w-full pl-10 pr-10 py-2.5 border border-slate-200 dark:border-slate-700 rounded-xl bg-slate-50 dark:bg-slate-800 text-sm focus:ring-2 focus:ring-indigo-500 outline-none transition"
                 />
                 <button 
@@ -67,18 +114,13 @@ const Register = () => {
                   {showPassword ? <EyeSlash weight="bold" /> : <Eye weight="bold" />}
                 </button>
               </div>
-              <p className="text-[10px] text-slate-500 mt-2 ml-1 italic">Min. 8 characters with letters & numbers</p>
             </div>
 
-            <div className="flex items-start gap-3 py-2">
-              <input type="checkbox" className="mt-1 rounded text-indigo-600 focus:ring-indigo-500 bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700" id="terms" />
-              <label htmlFor="terms" className="text-xs text-slate-500">
-                I agree to the <a href="#" className="font-bold text-indigo-600">Terms of Service</a> and <a href="#" className="font-bold text-indigo-600">Privacy Policy</a>
-              </label>
-            </div>
-
-            <button className="w-full py-3 bg-indigo-600 text-white rounded-xl font-bold hover:bg-indigo-500 transition shadow-lg shadow-indigo-600/20 active:scale-[0.98]">
-              Create Account
+            <button 
+              disabled={loading}
+              className="w-full py-3 bg-indigo-600 text-white rounded-xl font-bold hover:bg-indigo-500 transition shadow-lg shadow-indigo-600/20 active:scale-[0.98] disabled:opacity-50"
+            >
+              {loading ? 'Creating Account...' : 'Create Account'}
             </button>
           </form>
         </div>
@@ -92,4 +134,3 @@ const Register = () => {
 };
 
 export default Register;
-
