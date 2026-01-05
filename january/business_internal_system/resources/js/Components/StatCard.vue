@@ -2,37 +2,41 @@
 defineProps({
     title: String,
     value: [String, Number],
-    icon: String,
     trend: String,
     trendColor: {
         type: String,
-        default: 'text-gray-500'
+        default: 'text-emerald-500'
     },
     alert: Boolean
 });
 </script>
 
 <template>
-    <div :class="[
-        'p-6 bg-white dark:bg-gray-800 rounded-xl border transition-all duration-200',
-        alert ? 'border-red-500 ring-1 ring-red-500' : 'border-gray-200 dark:border-gray-700'
-    ]">
-        <div class="flex items-center justify-between">
-            <div>
-                <p class="text-sm font-medium text-gray-500 dark:text-gray-400">{{ title }}</p>
-                <h3 class="text-2xl font-bold mt-1 text-gray-900 dark:text-white">{{ value }}</h3>
+    <div class="relative flex flex-col min-w-0 break-words bg-white dark:bg-gray-800 rounded mb-6 xl:mb-0 shadow-lg border-t-4"
+         :class="alert ? 'border-red-500' : 'border-indigo-500'">
+        <div class="flex-auto p-4">
+            <div class="flex flex-wrap">
+                <div class="relative w-full pr-4 max-w-full flex-grow flex-1">
+                    <h5 class="text-gray-400 uppercase font-bold text-xs">
+                        {{ title }}
+                    </h5>
+                    <span class="font-bold text-xl text-gray-700 dark:text-white">
+                        {{ value }}
+                    </span>
+                </div>
+                <div class="relative w-auto pl-4 flex-initial">
+                    <div class="text-white p-3 text-center inline-flex items-center justify-center w-12 h-12 shadow-lg rounded-full"
+                         :class="alert ? 'bg-red-500' : 'bg-indigo-500'">
+                        <slot name="icon"></slot>
+                    </div>
+                </div>
             </div>
-            <div :class="[
-                'p-3 rounded-lg',
-                alert ? 'bg-red-100 text-red-600' : 'bg-indigo-100 text-indigo-600'
-            ]">
-                <slot name="icon"></slot>
-            </div>
-        </div>
-        <div v-if="trend" class="mt-4 flex items-center">
-            <span :class="['text-xs font-semibold', trendColor]">{{ trend }}</span>
-            <span class="text-xs text-gray-400 ml-2">vs last period</span>
+            <p v-if="trend" class="text-sm text-gray-400 mt-4">
+                <span :class="trendColor" class="mr-2 font-bold">
+                    {{ trend }}
+                </span>
+                <span class="whitespace-nowrap italic text-xs">Since last month</span>
+            </p>
         </div>
     </div>
 </template>
-

@@ -3,370 +3,233 @@ import { Head, Link } from '@inertiajs/vue3';
 import ApplicationLogo from '@/Components/ApplicationLogo.vue';
 
 defineProps({
-    canLogin: {
-        type: Boolean,
-    },
-    canRegister: {
-        type: Boolean,
-    },
-    laravelVersion: {
-        type: String,
-        required: true,
-    },
-    phpVersion: {
-        type: String,
-        required: true,
-    },
+    canLogin: Boolean,
+    canRegister: Boolean,
 });
-
-function handleImageError() {
-    document.getElementById('screenshot-container')?.classList.add('!hidden');
-    document.getElementById('docs-card')?.classList.add('!row-span-1');
-    document.getElementById('docs-card-content')?.classList.add('!flex-row');
-    document.getElementById('background')?.classList.add('!hidden');
-}
 </script>
 
 <template>
-    <Head title="Welcome" />
-    <div class="bg-gray-50 text-black/50 dark:bg-black dark:text-white/50">
-        <img
-            id="background"
-            class="absolute -left-20 top-0 max-w-[877px]"
-            src="https://laravel.com/assets/img/welcome/background.svg"
-        />
-        <div
-            class="relative flex min-h-screen flex-col items-center justify-center selection:bg-[#FF2D20] selection:text-white"
-        >
-            <div class="relative w-full max-w-2xl px-6 lg:max-w-7xl">
-                <header
-                    class="grid grid-cols-2 items-center gap-2 py-10 lg:grid-cols-3"
-                >
-                    <div class="flex lg:col-start-2 lg:justify-center">
-                        <ApplicationLogo class="h-12 w-auto lg:h-16" />
-                    </div>
-                    <nav v-if="canLogin" class="-mx-3 flex flex-1 justify-end">
-                        <Link
-                            v-if="$page.props.auth.user"
-                            :href="route('dashboard')"
-                            class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white"
-                        >
-                            Dashboard
-                        </Link>
+    <Head title="Operra - Business Operations Control Panel" />
 
-                        <template v-else>
-                            <Link
-                                :href="route('login')"
-                                class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white"
-                            >
-                                Log in
+    <div class="text-gray-800 antialiased">
+        <!-- Navbar -->
+        <nav class="absolute top-0 z-50 flex w-full flex-wrap items-center justify-between px-2 py-3">
+            <div class="container mx-auto flex flex-wrap items-center justify-between px-4">
+                <div class="relative flex w-full justify-between lg:static lg:block lg:w-auto lg:justify-start">
+                    <Link :href="route('dashboard')" class="mr-4 inline-block whitespace-nowrap py-2 text-sm font-bold uppercase leading-relaxed text-white">
+                        <div class="flex items-center gap-2">
+                            <ApplicationLogo class="h-8 w-auto invert brightness-200" />
+                            <span>Operra</span>
+                        </div>
+                    </Link>
+                </div>
+                
+                <div class="flex flex-grow items-center bg-white lg:bg-transparent lg:shadow-none" id="example-navbar-warning">
+                    <ul class="flex list-none flex-col lg:ml-auto lg:flex-row">
+                        <li v-if="canLogin" class="flex items-center">
+                            <Link v-if="$page.props.auth.user" :href="route('dashboard')" 
+                                class="mb-3 ml-3 rounded bg-white px-4 py-2 text-xs font-bold uppercase text-gray-800 shadow outline-none transition-all duration-150 ease-linear hover:shadow-md focus:outline-none active:bg-gray-100 lg:mb-0 lg:mr-1">
+                                Dashboard
                             </Link>
+                            <template v-else>
+                                <Link :href="route('login')" class="px-3 py-4 text-xs font-bold uppercase text-white lg:py-2">
+                                    Log In
+                                </Link>
+                                <Link v-if="canRegister" :href="route('register')" 
+                                    class="mb-3 ml-3 rounded bg-white px-4 py-2 text-xs font-bold uppercase text-gray-800 shadow outline-none transition-all duration-150 ease-linear hover:shadow-md focus:outline-none active:bg-gray-100 lg:mb-0 lg:mr-1">
+                                    Get Started
+                                </Link>
+                            </template>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
 
-                            <Link
-                                v-if="canRegister"
-                                :href="route('register')"
-                                class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white"
-                            >
-                                Register
-                            </Link>
-                        </template>
-                    </nav>
-                </header>
-
-                <main class="mt-6">
-                    <div class="grid gap-6 lg:grid-cols-2 lg:gap-8">
-                        <a
-                            href="https://laravel.com/docs"
-                            id="docs-card"
-                            class="flex flex-col items-start gap-6 overflow-hidden rounded-lg bg-white p-6 shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] ring-1 ring-white/[0.05] transition duration-300 hover:text-black/70 hover:ring-black/20 focus:outline-none focus-visible:ring-[#FF2D20] md:row-span-3 lg:p-10 lg:pb-10 dark:bg-zinc-900 dark:ring-zinc-800 dark:hover:text-white/70 dark:hover:ring-zinc-700 dark:focus-visible:ring-[#FF2D20]"
-                        >
-                            <div
-                                id="screenshot-container"
-                                class="relative flex w-full flex-1 items-stretch"
-                            >
-                                <img
-                                    src="https://laravel.com/assets/img/welcome/docs-light.svg"
-                                    alt="Laravel documentation screenshot"
-                                    class="aspect-video h-full w-full flex-1 rounded-[10px] object-cover object-top drop-shadow-[0px_4px_34px_rgba(0,0,0,0.06)] dark:hidden"
-                                    @error="handleImageError"
-                                />
-                                <img
-                                    src="https://laravel.com/assets/img/welcome/docs-dark.svg"
-                                    alt="Laravel documentation screenshot"
-                                    class="hidden aspect-video h-full w-full flex-1 rounded-[10px] object-cover object-top drop-shadow-[0px_4px_34px_rgba(0,0,0,0.25)] dark:block"
-                                />
-                                <div
-                                    class="absolute -bottom-16 -left-16 h-40 w-[calc(100%+8rem)] bg-gradient-to-b from-transparent via-white to-white dark:via-zinc-900 dark:to-zinc-900"
-                                ></div>
-                            </div>
-
-                            <div
-                                class="relative flex items-center gap-6 lg:items-end"
-                            >
-                                <div
-                                    id="docs-card-content"
-                                    class="flex items-start gap-6 lg:flex-col"
-                                >
-                                    <div
-                                        class="flex size-12 shrink-0 items-center justify-center rounded-full bg-[#FF2D20]/10 sm:size-16"
-                                    >
-                                        <svg
-                                            class="size-5 sm:size-6"
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            fill="none"
-                                            viewBox="0 0 24 24"
-                                        >
-                                            <path
-                                                fill="#FF2D20"
-                                                d="M23 4a1 1 0 0 0-1.447-.894L12.224 7.77a.5.5 0 0 1-.448 0L2.447 3.106A1 1 0 0 0 1 4v13.382a1.99 1.99 0 0 0 1.105 1.79l9.448 4.728c.14.065.293.1.447.1.154-.005.306-.04.447-.105l9.453-4.724a1.99 1.99 0 0 0 1.1-1.789V4ZM3 6.023a.25.25 0 0 1 .362-.223l7.5 3.75a.251.251 0 0 1 .138.223v11.2a.25.25 0 0 1-.362.224l-7.5-3.75a.25.25 0 0 1-.138-.22V6.023Zm18 11.2a.25.25 0 0 1-.138.224l-7.5 3.75a.249.249 0 0 1-.329-.099.249.249 0 0 1-.033-.12V9.772a.251.251 0 0 1 .138-.224l7.5-3.75a.25.25 0 0 1 .362.224v11.2Z"
-                                            />
-                                            <path
-                                                fill="#FF2D20"
-                                                d="m3.55 1.893 8 4.048a1.008 1.008 0 0 0 .9 0l8-4.048a1 1 0 0 0-.9-1.785l-7.322 3.706a.506.506 0 0 1-.452 0L4.454.108a1 1 0 0 0-.9 1.785H3.55Z"
-                                            />
-                                        </svg>
-                                    </div>
-
-                                    <div class="pt-3 sm:pt-5 lg:pt-0">
-                                        <h2
-                                            class="text-xl font-semibold text-black dark:text-white"
-                                        >
-                                            Operra System
-                                        </h2>
-
-                                        <p class="mt-4 text-sm/relaxed">
-                                            Operra is a production-ready internal business system designed for SMEs and growing startups.
-                                            Manage your operations, inventory, and staff all in one place.
-                                        </p>
-                                    </div>
+        <main>
+            <!-- Hero Section -->
+            <div class="relative flex min-h-screen content-center items-center justify-center pb-32 pt-16">
+                <div class="absolute top-0 h-full w-full bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1557804506-669a67965ba0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1267&q=80');">
+                    <span id="blackOverlay" class="absolute h-full w-full bg-black opacity-75"></span>
+                </div>
+                <div class="container relative mx-auto">
+                    <div class="flex flex-wrap items-center">
+                        <div class="ml-auto mr-auto w-full px-4 text-center lg:w-8/12">
+                            <div class="pr-12">
+                                <h1 class="text-5xl font-bold text-white uppercase tracking-wider">
+                                    Operra Business System
+                                </h1>
+                                <p class="mt-4 text-lg text-gray-300">
+                                    Sistem internal cerdas untuk UKM dan startup. Kelola pesanan, stok barang, hingga aktivitas staf dalam satu dasbor kendali yang kuat dan terukur.
+                                </p>
+                                <div class="mt-10">
+                                    <Link :href="route('register')" class="rounded-full bg-indigo-600 px-8 py-4 font-bold text-white shadow-lg transition-all hover:bg-indigo-700">
+                                        Mulai Sekarang
+                                    </Link>
                                 </div>
-
-                                <svg
-                                    class="size-6 shrink-0 stroke-[#FF2D20]"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke-width="1.5"
-                                >
-                                    <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75"
-                                    />
-                                </svg>
-                            </div>
-                        </a>
-
-                        <a
-                            href="https://laracasts.com"
-                            class="flex items-start gap-4 rounded-lg bg-white p-6 shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] ring-1 ring-white/[0.05] transition duration-300 hover:text-black/70 hover:ring-black/20 focus:outline-none focus-visible:ring-[#FF2D20] lg:pb-10 dark:bg-zinc-900 dark:ring-zinc-800 dark:hover:text-white/70 dark:hover:ring-zinc-700 dark:focus-visible:ring-[#FF2D20]"
-                        >
-                            <div
-                                class="flex size-12 shrink-0 items-center justify-center rounded-full bg-[#FF2D20]/10 sm:size-16"
-                            >
-                                <svg
-                                    class="size-5 sm:size-6"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                >
-                                    <g fill="#FF2D20">
-                                        <path
-                                            d="M24 8.25a.5.5 0 0 0-.5-.5H.5a.5.5 0 0 0-.5.5v12a2.5 2.5 0 0 0 2.5 2.5h19a2.5 2.5 0 0 0 2.5-2.5v-12Zm-7.765 5.868a1.221 1.221 0 0 1 0 2.264l-6.626 2.776A1.153 1.153 0 0 1 8 18.123v-5.746a1.151 1.151 0 0 1 1.609-1.035l6.626 2.776ZM19.564 1.677a.25.25 0 0 0-.177-.427H15.6a.106.106 0 0 0-.072.03l-4.54 4.543a.25.25 0 0 0 .177.427h3.783c.027 0 .054-.01.073-.03l4.543-4.543ZM22.071 1.318a.047.047 0 0 0-.045.013l-4.492 4.492a.249.249 0 0 0 .038.385.25.25 0 0 0 .14.042h5.784a.5.5 0 0 0 .5-.5v-2a2.5 2.5 0 0 0-1.925-2.432ZM13.014 1.677a.25.25 0 0 0-.178-.427H9.101a.106.106 0 0 0-.073.03l-4.54 4.543a.25.25 0 0 0 .177.427H8.4a.106.106 0 0 0 .073-.03l4.54-4.543ZM6.513 1.677a.25.25 0 0 0-.177-.427H2.5A2.5 2.5 0 0 0 0 3.75v2a.5.5 0 0 0 .5.5h1.4a.106.106 0 0 0 .073-.03l4.54-4.543Z"
-                                        />
-                                    </g>
-                                </svg>
-                            </div>
-
-                            <div class="pt-3 sm:pt-5">
-                                <h2
-                                    class="text-xl font-semibold text-black dark:text-white"
-                                >
-                                    Laracasts
-                                </h2>
-
-                                <p class="mt-4 text-sm/relaxed">
-                                    Laracasts offers thousands of video
-                                    tutorials on Laravel, PHP, and JavaScript
-                                    development. Check them out, see for
-                                    yourself, and massively level up your
-                                    development skills in the process.
-                                </p>
-                            </div>
-
-                            <svg
-                                class="size-6 shrink-0 self-center stroke-[#FF2D20]"
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke-width="1.5"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75"
-                                />
-                            </svg>
-                        </a>
-
-                        <a
-                            href="https://laravel-news.com"
-                            class="flex items-start gap-4 rounded-lg bg-white p-6 shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] ring-1 ring-white/[0.05] transition duration-300 hover:text-black/70 hover:ring-black/20 focus:outline-none focus-visible:ring-[#FF2D20] lg:pb-10 dark:bg-zinc-900 dark:ring-zinc-800 dark:hover:text-white/70 dark:hover:ring-zinc-700 dark:focus-visible:ring-[#FF2D20]"
-                        >
-                            <div
-                                class="flex size-12 shrink-0 items-center justify-center rounded-full bg-[#FF2D20]/10 sm:size-16"
-                            >
-                                <svg
-                                    class="size-5 sm:size-6"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                >
-                                    <g fill="#FF2D20">
-                                        <path
-                                            d="M8.75 4.5H5.5c-.69 0-1.25.56-1.25 1.25v4.75c0 .69.56 1.25 1.25 1.25h3.25c.69 0 1.25-.56 1.25-1.25V5.75c0-.69-.56-1.25-1.25-1.25Z"
-                                        />
-                                        <path
-                                            d="M24 10a3 3 0 0 0-3-3h-2V2.5a2 2 0 0 0-2-2H2a2 2 0 0 0-2 2V20a3.5 3.5 0 0 0 3.5 3.5h17A3.5 3.5 0 0 0 24 20V10ZM3.5 21.5A1.5 1.5 0 0 1 2 20V3a.5.5 0 0 1 .5-.5h14a.5.5 0 0 1 .5.5v17c0 .295.037.588.11.874a.5.5 0 0 1-.484.625L3.5 21.5ZM22 20a1.5 1.5 0 1 1-3 0V9.5a.5.5 0 0 1 .5-.5H21a1 1 0 0 1 1 1v10Z"
-                                        />
-                                        <path
-                                            d="M12.751 6.047h2a.75.75 0 0 1 .75.75v.5a.75.75 0 0 1-.75.75h-2A.75.75 0 0 1 12 7.3v-.5a.75.75 0 0 1 .751-.753ZM12.751 10.047h2a.75.75 0 0 1 .75.75v.5a.75.75 0 0 1-.75.75h-2A.75.75 0 0 1 12 11.3v-.5a.75.75 0 0 1 .751-.753ZM4.751 14.047h10a.75.75 0 0 1 .75.75v.5a.75.75 0 0 1-.75.75h-10A.75.75 0 0 1 4 15.3v-.5a.75.75 0 0 1 .751-.753ZM4.75 18.047h7.5a.75.75 0 0 1 .75.75v.5a.75.75 0 0 1-.75.75h-7.5A.75.75 0 0 1 4 19.3v-.5a.75.75 0 0 1 .75-.753Z"
-                                        />
-                                    </g>
-                                </svg>
-                            </div>
-
-                            <div class="pt-3 sm:pt-5">
-                                <h2
-                                    class="text-xl font-semibold text-black dark:text-white"
-                                >
-                                    Laravel News
-                                </h2>
-
-                                <p class="mt-4 text-sm/relaxed">
-                                    Laravel News is a community driven portal
-                                    and newsletter aggregating all of the latest
-                                    and most important news in the Laravel
-                                    ecosystem, including new package releases
-                                    and tutorials.
-                                </p>
-                            </div>
-
-                            <svg
-                                class="size-6 shrink-0 self-center stroke-[#FF2D20]"
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke-width="1.5"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75"
-                                />
-                            </svg>
-                        </a>
-
-                        <div
-                            class="flex items-start gap-4 rounded-lg bg-white p-6 shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] ring-1 ring-white/[0.05] lg:pb-10 dark:bg-zinc-900 dark:ring-zinc-800"
-                        >
-                            <div
-                                class="flex size-12 shrink-0 items-center justify-center rounded-full bg-[#FF2D20]/10 sm:size-16"
-                            >
-                                <svg
-                                    class="size-5 sm:size-6"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                >
-                                    <g fill="#FF2D20">
-                                        <path
-                                            d="M16.597 12.635a.247.247 0 0 0-.08-.237 2.234 2.234 0 0 1-.769-1.68c.001-.195.03-.39.084-.578a.25.25 0 0 0-.09-.267 8.8 8.8 0 0 0-4.826-1.66.25.25 0 0 0-.268.181 2.5 2.5 0 0 1-2.4 1.824.045.045 0 0 0-.045.037 12.255 12.255 0 0 0-.093 3.86.251.251 0 0 0 .208.214c2.22.366 4.367 1.08 6.362 2.118a.252.252 0 0 0 .32-.079 10.09 10.09 0 0 0 1.597-3.733ZM13.616 17.968a.25.25 0 0 0-.063-.407A19.697 19.697 0 0 0 8.91 15.98a.25.25 0 0 0-.287.325c.151.455.334.898.548 1.328.437.827.981 1.594 1.619 2.28a.249.249 0 0 0 .32.044 29.13 29.13 0 0 0 2.506-1.99ZM6.303 14.105a.25.25 0 0 0 .265-.274 13.048 13.048 0 0 1 .205-4.045.062.062 0 0 0-.022-.07 2.5 2.5 0 0 1-.777-.982.25.25 0 0 0-.271-.149 11 11 0 0 0-5.6 2.815.255.255 0 0 0-.075.163c-.008.135-.02.27-.02.406.002.8.084 1.598.246 2.381a.25.25 0 0 0 .303.193 19.924 19.924 0 0 1 5.746-.438ZM9.228 20.914a.25.25 0 0 0 .1-.393 11.53 11.53 0 0 1-1.5-2.22 12.238 12.238 0 0 1-.91-2.465.248.248 0 0 0-.22-.187 18.876 18.876 0 0 0-5.69.33.249.249 0 0 0-.179.336c.838 2.142 2.272 4 4.132 5.353a.254.254 0 0 0 .15.048c1.41-.01 2.807-.282 4.117-.802ZM18.93 12.957l-.005-.008a.25.25 0 0 0-.268-.082 2.21 2.21 0 0 1-.41.081.25.25 0 0 0-.217.2c-.582 2.66-2.127 5.35-5.75 7.843a.248.248 0 0 0-.09.299.25.25 0 0 0 .065.091 28.703 28.703 0 0 0 2.662 2.12.246.246 0 0 0 .209.037c2.579-.701 4.85-2.242 6.456-4.378a.25.25 0 0 0 .048-.189 13.51 13.51 0 0 0-2.7-6.014ZM5.702 7.058a.254.254 0 0 0 .2-.165A2.488 2.488 0 0 1 7.98 5.245a.093.093 0 0 0 .078-.062 19.734 19.734 0 0 1 3.055-4.74.25.25 0 0 0-.21-.41 12.009 12.009 0 0 0-10.4 8.558.25.25 0 0 0 .373.281 12.912 12.912 0 0 1 4.826-1.814ZM10.773 22.052a.25.25 0 0 0-.28-.046c-.758.356-1.55.635-2.365.833a.25.25 0 0 0-.022.48c1.252.43 2.568.65 3.893.65.1 0 .2 0 .3-.008a.25.25 0 0 0 .147-.444c-.526-.424-1.1-.917-1.673-1.465ZM18.744 8.436a.249.249 0 0 0 .15.228 2.246 2.246 0 0 1 1.352 2.054c0 .337-.08.67-.23.972a.25.25 0 0 0 .042.28l.007.009a15.016 15.016 0 0 1 2.52 4.6.25.25 0 0 0 .37.132.25.25 0 0 0 .096-.114c.623-1.464.944-3.039.945-4.63a12.005 12.005 0 0 0-5.78-10.258.25.25 0 0 0-.373.274c.547 2.109.85 4.274.901 6.453ZM9.61 5.38a.25.25 0 0 0 .08.31c.34.24.616.561.8.935a.25.25 0 0 0 .3.127.631.631 0 0 1 .206-.034c2.054.078 4.036.772 5.69 1.991a.251.251 0 0 0 .267.024c.046-.024.093-.047.141-.067a.25.25 0 0 0 .151-.23A29.98 29.98 0 0 0 15.957.764a.25.25 0 0 0-.16-.164 11.924 11.924 0 0 0-2.21-.518.252.252 0 0 0-.215.076A22.456 22.456 0 0 0 9.61 5.38Z"
-                                        />
-                                    </g>
-                                </svg>
-                            </div>
-
-                            <div class="pt-3 sm:pt-5">
-                                <h2
-                                    class="text-xl font-semibold text-black dark:text-white"
-                                >
-                                    Vibrant Ecosystem
-                                </h2>
-
-                                <p class="mt-4 text-sm/relaxed">
-                                    Laravel's robust library of first-party
-                                    tools and libraries, such as
-                                    <a
-                                        href="https://forge.laravel.com"
-                                        class="rounded-sm underline hover:text-black focus:outline-none focus-visible:ring-1 focus-visible:ring-[#FF2D20] dark:hover:text-white dark:focus-visible:ring-[#FF2D20]"
-                                        >Forge</a
-                                    >,
-                                    <a
-                                        href="https://vapor.laravel.com"
-                                        class="rounded-sm underline hover:text-black focus:outline-none focus-visible:ring-1 focus-visible:ring-[#FF2D20] dark:hover:text-white"
-                                        >Vapor</a
-                                    >,
-                                    <a
-                                        href="https://nova.laravel.com"
-                                        class="rounded-sm underline hover:text-black focus:outline-none focus-visible:ring-1 focus-visible:ring-[#FF2D20] dark:hover:text-white"
-                                        >Nova</a
-                                    >,
-                                    <a
-                                        href="https://envoyer.io"
-                                        class="rounded-sm underline hover:text-black focus:outline-none focus-visible:ring-1 focus-visible:ring-[#FF2D20] dark:hover:text-white"
-                                        >Envoyer</a
-                                    >, and
-                                    <a
-                                        href="https://herd.laravel.com"
-                                        class="rounded-sm underline hover:text-black focus:outline-none focus-visible:ring-1 focus-visible:ring-[#FF2D20] dark:hover:text-white"
-                                        >Herd</a
-                                    >
-                                    help you take your projects to the next
-                                    level. Pair them with powerful open source
-                                    libraries like
-                                    <a
-                                        href="https://laravel.com/docs/billing"
-                                        class="rounded-sm underline hover:text-black focus:outline-none focus-visible:ring-1 focus-visible:ring-[#FF2D20] dark:hover:text-white"
-                                        >Cashier</a
-                                    >,
-                                    <a
-                                        href="https://laravel.com/docs/dusk"
-                                        class="rounded-sm underline hover:text-black focus:outline-none focus-visible:ring-1 focus-visible:ring-[#FF2D20] dark:hover:text-white"
-                                        >Dusk</a
-                                    >,
-                                    <a
-                                        href="https://laravel.com/docs/broadcasting"
-                                        class="rounded-sm underline hover:text-black focus:outline-none focus-visible:ring-1 focus-visible:ring-[#FF2D20] dark:hover:text-white"
-                                        >Echo</a
-                                    >,
-                                    <a
-                                        href="https://laravel.com/docs/horizon"
-                                        class="rounded-sm underline hover:text-black focus:outline-none focus-visible:ring-1 focus-visible:ring-[#FF2D20] dark:hover:text-white"
-                                        >Horizon</a
-                                    >,
-                                    <a
-                                        href="https://laravel.com/docs/sanctum"
-                                        class="rounded-sm underline hover:text-black focus:outline-none focus-visible:ring-1 focus-visible:ring-[#FF2D20] dark:hover:text-white"
-                                        >Sanctum</a
-                                    >,
-                                    <a
-                                        href="https://laravel.com/docs/telescope"
-                                        class="rounded-sm underline hover:text-black focus:outline-none focus-visible:ring-1 focus-visible:ring-[#FF2D20] dark:hover:text-white"
-                                        >Telescope</a
-                                    >, and more.
-                                </p>
                             </div>
                         </div>
                     </div>
-                </main>
-
-                <footer
-                    class="py-16 text-center text-sm text-black dark:text-white/70"
-                >
-                    Operra Business System v1.0
-                </footer>
+                </div>
+                <div class="pointer-events-none absolute bottom-0 left-0 right-0 top-auto w-full overflow-hidden" style="height: 70px;">
+                    <svg class="absolute bottom-0 overflow-hidden" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" version="1.1" viewBox="0 0 2560 100" x="0" y="0">
+                        <polygon class="fill-current text-gray-300" points="2560 0 2560 100 0 100"></polygon>
+                    </svg>
+                </div>
             </div>
-        </div>
+
+            <!-- Features Section -->
+            <section class="-mt-24 bg-gray-300 pb-20">
+                <div class="container mx-auto px-4">
+                    <div class="flex flex-wrap">
+                        <div class="w-full px-4 pt-6 text-center md:w-4/12 lg:pt-12">
+                            <div class="relative mb-8 flex min-w-0 flex-col break-words rounded-lg bg-white shadow-lg">
+                                <div class="flex-auto px-4 py-5">
+                                    <div class="mb-5 inline-flex h-12 w-12 items-center justify-center rounded-full bg-red-400 p-3 text-center text-white shadow-lg">
+                                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" /></svg>
+                                    </div>
+                                    <h6 class="text-xl font-bold">Orders Tracking</h6>
+                                    <p class="mb-4 mt-2 text-gray-600 italic">
+                                        Pantau alur pesanan dari pending hingga selesai secara real-time untuk kepuasan pelanggan maksimal.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="w-full px-4 text-center md:w-4/12">
+                            <div class="relative mb-8 flex min-w-0 flex-col break-words rounded-lg bg-white shadow-lg">
+                                <div class="flex-auto px-4 py-5">
+                                    <div class="mb-5 inline-flex h-12 w-12 items-center justify-center rounded-full bg-indigo-400 p-3 text-center text-white shadow-lg">
+                                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" /></svg>
+                                    </div>
+                                    <h6 class="text-xl font-bold">Inventory Management</h6>
+                                    <p class="mb-4 mt-2 text-gray-600 italic">
+                                        Sistem stok otomatis dengan peringatan stok menipis, mencegah bottlenecks dalam operasional Anda.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="w-full px-4 pt-6 text-center md:w-4/12">
+                            <div class="relative mb-8 flex min-w-0 flex-col break-words rounded-lg bg-white shadow-lg">
+                                <div class="flex-auto px-4 py-5">
+                                    <div class="mb-5 inline-flex h-12 w-12 items-center justify-center rounded-full bg-green-400 p-3 text-center text-white shadow-lg">
+                                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+                                    </div>
+                                    <h6 class="text-xl font-bold">Staff Performance</h6>
+                                    <p class="mb-4 mt-2 text-gray-600 italic">
+                                        Log aktivitas transparan untuk memantau produktivitas tim dan pengambilan keputusan berbasis fakta.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-32 flex flex-wrap items-center">
+                        <div class="ml-auto mr-auto w-full px-4 md:w-5/12">
+                            <div class="mb-6 inline-flex h-16 w-16 items-center justify-center rounded-full bg-indigo-100 p-3 text-center text-indigo-600 shadow-lg">
+                                <svg class="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
+                            </div>
+                            <h3 class="mb-2 text-3xl font-semibold leading-normal">
+                                Dirancang untuk Pertumbuhan
+                            </h3>
+                            <p class="mb-4 mt-4 text-lg font-light leading-relaxed text-gray-700 italic">
+                                Operra bukan sekadar dasbor, melainkan sistem saraf pusat bisnis Anda. Kami memahami kebutuhan SME untuk memiliki kontrol penuh tanpa kerumitan teknis.
+                            </p>
+                            <p class="mb-4 mt-0 text-lg font-light leading-relaxed text-gray-700 italic">
+                                Dengan fitur analitik MRR dan monitoring biaya AI, Anda dapat merencanakan skalabilitas bisnis dengan data akurat di tangan.
+                            </p>
+                            <Link :href="route('dashboard')" class="mt-8 font-bold text-gray-800 transition-all hover:text-indigo-600">
+                                Lihat Demo Sistem
+                            </Link>
+                        </div>
+                        <div class="ml-auto mr-auto w-full px-4 md:w-4/12">
+                            <div class="relative mb-6 flex min-w-0 flex-col break-words rounded-lg bg-indigo-600 shadow-lg shadow-indigo-200">
+                                <img alt="..." src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1051&q=80" class="w-full rounded-t-lg align-middle" />
+                                <blockquote class="relative mb-4 p-8">
+                                    <svg preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 583 95" class="absolute left-0 block w-full" style="height: 95px; top: -94px;">
+                                        <polygon points="-30,95 583,95 583,65" class="fill-current text-indigo-600"></polygon>
+                                    </svg>
+                                    <h4 class="text-xl font-bold text-white uppercase">Satu Panel, Semua Kendali</h4>
+                                    <p class="mt-2 text-md font-light text-white italic">
+                                        "Operra membantu kami memangkas waktu approval biaya hingga 70%. Transparansi stok kini bukan lagi masalah bagi tim gudang kami."
+                                    </p>
+                                </blockquote>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Bottom CTA Section -->
+            <section class="relative bg-gray-900 py-20">
+                <div class="container mx-auto px-4">
+                    <div class="flex flex-wrap justify-center text-center">
+                        <div class="w-full px-4 lg:w-6/12">
+                            <h2 class="text-4xl font-bold text-white uppercase">Siap Optimalkan Bisnis Anda?</h2>
+                            <p class="mb-4 mt-4 text-lg leading-relaxed text-gray-500 italic">
+                                Bergabunglah dengan puluhan startup yang telah menggunakan Operra untuk mengontrol operasional mereka secara cerdas.
+                            </p>
+                            <div class="mt-10 flex justify-center gap-4">
+                                <Link :href="route('register')" class="rounded-lg bg-white px-6 py-3 font-bold text-gray-800 hover:bg-gray-100 transition-all">
+                                    Daftar Sekarang
+                                </Link>
+                                <a href="#features" class="rounded-lg border border-gray-700 px-6 py-3 font-bold text-white hover:bg-gray-800 transition-all">
+                                    Pelajari Fitur
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="relative bg-gray-300 pb-6 pt-8">
+            <div class="container mx-auto px-4">
+                <div class="flex flex-wrap text-center lg:text-left">
+                    <div class="w-full px-4 lg:w-6/12">
+                        <h4 class="text-3xl font-semibold">Operra Business System</h4>
+                        <h5 class="mb-2 mt-0 text-lg text-gray-700 italic">
+                            Sistem kendali operasional cerdas untuk pertumbuhan tanpa batas.
+                        </h5>
+                        <div class="mt-6 flex justify-center lg:justify-start gap-4">
+                            <button class="flex h-10 w-10 items-center justify-center rounded-full bg-white text-indigo-400 shadow-lg outline-none transition-transform hover:scale-110">
+                                <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/></svg>
+                            </button>
+                            <button class="flex h-10 w-10 items-center justify-center rounded-full bg-white text-red-600 shadow-lg outline-none transition-transform hover:scale-110">
+                                <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="w-full px-4 lg:w-6/12">
+                        <div class="mb-6 flex flex-wrap items-top">
+                            <div class="ml-auto w-full px-4 lg:w-4/12">
+                                <span class="mb-2 block text-sm font-bold uppercase text-gray-600">Links</span>
+                                <ul class="list-none">
+                                    <li><Link class="block pb-2 text-sm font-semibold text-gray-700 hover:text-gray-900" :href="route('dashboard')">Dashboard</Link></li>
+                                    <li><Link class="block pb-2 text-sm font-semibold text-gray-700 hover:text-gray-900" :href="route('login')">Login</Link></li>
+                                    <li><Link class="block pb-2 text-sm font-semibold text-gray-700 hover:text-gray-900" :href="route('register')">Register</Link></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr class="my-6 border-gray-400" />
+                <div class="flex flex-wrap items-center justify-center md:justify-between">
+                    <div class="mx-auto w-full px-4 text-center md:w-4/12">
+                        <div class="py-1 text-sm font-semibold text-gray-600">
+                            © 2026 Operra System. 
+                            <span class="block text-xs mt-1">Developed by <a href="https://hasanarofid.site" class="text-indigo-600 hover:text-indigo-800" target="_blank">hasanarofid</a></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
     </div>
 </template>
+
+<style scoped>
+/* Menambahkan transisi halus */
+.transition-all {
+    transition: all 0.3s ease;
+}
+</style>
