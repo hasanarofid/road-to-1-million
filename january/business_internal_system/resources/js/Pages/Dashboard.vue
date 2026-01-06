@@ -36,7 +36,7 @@ const chartOptions = {
         labels: { style: { colors: '#9ca3af' } }
     },
     yaxis: { labels: { style: { colors: '#9ca3af' } } },
-    colors: ['#4f46e5'],
+    colors: ['#0ea5e9'],
     theme: { mode: 'dark' }
 };
 
@@ -112,7 +112,7 @@ const formatCurrency = (value) => {
                                 <h3 class="font-bold text-base text-gray-700 dark:text-gray-200">Recent Orders</h3>
                             </div>
                             <div class="relative w-full px-4 max-w-full flex-grow flex-1 text-right">
-                                <button class="bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button">
+                                <button class="bg-operra-500 text-white active:bg-operra-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150 shadow hover:shadow-md" type="button">
                                     See all
                                 </button>
                             </div>

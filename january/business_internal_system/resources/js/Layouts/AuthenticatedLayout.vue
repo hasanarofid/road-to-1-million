@@ -1,15 +1,38 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import ApplicationLogo from '@/Components/ApplicationLogo.vue';
 import Dropdown from '@/Components/Dropdown.vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
 import { Link } from '@inertiajs/vue3';
 
 const collapseShow = ref("hidden");
+const isDark = ref(true); // Default dark
 
 function toggleCollapseShow(classes) {
   collapseShow.value = classes;
 }
+
+function toggleTheme() {
+    isDark.value = !isDark.value;
+    if (isDark.value) {
+        document.documentElement.classList.add('dark');
+        localStorage.setItem('theme', 'dark');
+    } else {
+        document.documentElement.classList.remove('dark');
+        localStorage.setItem('theme', 'light');
+    }
+}
+
+onMounted(() => {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'light') {
+        isDark.value = false;
+        document.documentElement.classList.remove('dark');
+    } else {
+        isDark.value = true;
+        document.documentElement.classList.add('dark');
+    }
+});
 </script>
 
 <template>
@@ -32,11 +55,17 @@ function toggleCollapseShow(classes) {
         >
           <div class="flex items-center gap-2">
             <ApplicationLogo class="h-8 w-auto" />
-            <span>Operra Admin</span>
+            <span class="text-operra-600 dark:text-operra-400">Operra Admin</span>
           </div>
         </Link>
         <!-- User -->
         <ul class="md:hidden items-center flex flex-wrap list-none">
+          <li class="inline-block relative">
+            <button @click="toggleTheme" class="text-gray-500 block py-1 px-3">
+                <svg v-if="isDark" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 18v1m9-9h1m-18 0H2m3.364-7.364l-.707-.707m12.728 12.728l-.707-.707M6.343 17.657l-.707.707M17.657 6.343l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
+                <svg v-else class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>
+            </button>
+          </li>
           <li class="inline-block relative">
             <Dropdown align="right" width="48">
                 <template #trigger>
@@ -89,20 +118,24 @@ function toggleCollapseShow(classes) {
             <li class="items-center">
               <Link
                 :href="route('dashboard')"
-                class="text-xs uppercase py-3 font-bold block"
-                :class="route().current('dashboard') ? 'text-indigo-500 hover:text-indigo-600' : 'text-gray-700 dark:text-gray-300 hover:text-gray-500'"
+                class="text-xs uppercase py-3 font-bold block transition-colors duration-200"
+                :class="route().current('dashboard') ? 'text-operra-500 hover:text-operra-600' : 'text-gray-700 dark:text-gray-300 hover:text-operra-500'"
               >
                 <i class="fas fa-tv mr-2 text-sm" :class="route().current('dashboard') ? 'opacity-100' : 'opacity-75'"></i>
                 Dashboard
               </Link>
             </li>
             <li class="items-center">
-                <Link href="#" class="text-gray-700 dark:text-gray-300 hover:text-gray-500 text-xs uppercase py-3 font-bold block">
+                <Link :href="route('orders.index')" 
+                    class="text-xs uppercase py-3 font-bold block transition-colors duration-200"
+                    :class="route().current('orders.*') ? 'text-operra-500 hover:text-operra-600' : 'text-gray-700 dark:text-gray-300 hover:text-operra-500'">
                     Orders
                 </Link>
             </li>
             <li class="items-center">
-                <Link href="#" class="text-gray-700 dark:text-gray-300 hover:text-gray-500 text-xs uppercase py-3 font-bold block">
+                <Link :href="route('inventory.index')" 
+                    class="text-xs uppercase py-3 font-bold block transition-colors duration-200"
+                    :class="route().current('inventory.*') ? 'text-operra-500 hover:text-operra-600' : 'text-gray-700 dark:text-gray-300 hover:text-operra-500'">
                     Inventory
                 </Link>
             </li>
@@ -118,7 +151,7 @@ function toggleCollapseShow(classes) {
             <li class="items-center">
               <Link
                 :href="route('profile.edit')"
-                class="text-gray-700 dark:text-gray-300 hover:text-gray-500 text-xs uppercase py-3 font-bold block"
+                class="text-gray-700 dark:text-gray-300 hover:text-operra-500 text-xs uppercase py-3 font-bold block transition-colors duration-200"
               >
                 Profile Settings
               </Link>
@@ -129,7 +162,7 @@ function toggleCollapseShow(classes) {
     </nav>
 
     <!-- Main Content -->
-    <div class="relative md:ml-64 bg-gray-100 dark:bg-gray-900 min-h-screen">
+    <div class="relative md:ml-64 bg-gray-100 dark:bg-gray-900 min-h-screen transition-colors duration-300">
       <!-- Top Navbar -->
       <nav class="absolute top-0 left-0 w-full z-10 bg-transparent md:flex-row md:flex-nowrap md:justify-start flex items-center p-4">
         <div class="w-full mx-autp items-center flex justify-between md:flex-nowrap flex-wrap md:px-10 px-4">
@@ -137,12 +170,18 @@ function toggleCollapseShow(classes) {
           <span class="text-white text-sm uppercase hidden lg:inline-block font-semibold">
             <slot name="header" />
           </span>
-          <!-- User Dropdown -->
-          <ul class="flex-col md:flex-row list-none items-center hidden md:flex">
+          <!-- User & Theme -->
+          <ul class="flex-col md:flex-row list-none items-center hidden md:flex gap-4">
+             <li class="inline-block relative">
+                <button @click="toggleTheme" class="text-white hover:text-operra-200 transition-colors duration-200">
+                    <svg v-if="isDark" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 18v1m9-9h1m-18 0H2m3.364-7.364l-.707-.707m12.728 12.728l-.707-.707M6.343 17.657l-.707.707M17.657 6.343l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
+                    <svg v-else class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>
+                </button>
+             </li>
              <li class="inline-block relative">
                 <Dropdown align="right" width="48">
                     <template #trigger>
-                        <button class="text-white block py-1 px-3 font-semibold">
+                        <button class="text-white block py-1 px-3 font-semibold hover:text-operra-200 transition-colors duration-200">
                             {{ $page.props.auth.user.name }}
                         </button>
                     </template>
@@ -157,7 +196,7 @@ function toggleCollapseShow(classes) {
       </nav>
 
       <!-- Header / Stats Container -->
-      <div class="relative bg-indigo-600 md:pt-32 pb-32 pt-12">
+      <div class="relative bg-operra-600 md:pt-32 pb-32 pt-12 transition-colors duration-300">
         <div class="px-4 md:px-10 mx-auto w-full">
           <div>
             <!-- Header Stats Slots -->
@@ -176,7 +215,7 @@ function toggleCollapseShow(classes) {
             <div class="flex flex-wrap items-center md:justify-between justify-center">
               <div class="w-full md:w-4/12 px-4">
                 <div class="text-sm text-gray-500 dark:text-gray-400 font-semibold py-1 text-center md:text-left">
-                  © 2026 Operra by <a href="https://hasanarofid.site" class="text-indigo-500 hover:text-indigo-700">hasanarofid</a>
+                  © 2026 Operra by <a href="https://hasanarofid.site" class="text-operra-500 hover:text-operra-700">hasanarofid</a>
                 </div>
               </div>
             </div>
