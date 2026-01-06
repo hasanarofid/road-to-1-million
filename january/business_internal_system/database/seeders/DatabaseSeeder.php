@@ -9,7 +9,14 @@ use App\Models\StaffActivity;
 use App\Models\Approval;
 use App\Models\Subscription;
 use App\Models\AiUsage;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Setting;
+use App\Models\Warehouse;
+use App\Models\Product;
+use App\Models\Customer;
+use App\Models\Supplier;
+use App\Models\SalesOrder;
+use App\Models\Invoice;
+use App\Models\StockMovement;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
@@ -17,15 +24,12 @@ use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
-    /**
-     * Seed the application's database.
-     */
     public function run(): void
     {
         // 1. Roles & Permissions Setup
-        $adminRole = Role::create(['name' => 'admin']);
-        $managerRole = Role::create(['name' => 'manager']);
-        $staffRole = Role::create(['name' => 'staff']);
+        $adminRole = Role::firstOrCreate(['name' => 'admin']);
+        $managerRole = Role::firstOrCreate(['name' => 'manager']);
+        $staffRole = Role::firstOrCreate(['name' => 'staff']);
 
         $permissions = [
             'manage orders',
@@ -34,62 +38,93 @@ class DatabaseSeeder extends Seeder
             'handle approvals',
             'view analytics',
             'monitor ai cost',
+            'manage settings',
+            'manage master data',
+            'manage sales',
+            'manage stock',
         ];
 
         foreach ($permissions as $permission) {
-            Permission::create(['name' => $permission]);
+            Permission::firstOrCreate(['name' => $permission]);
         }
 
-        $adminRole->givePermissionTo(Permission::all());
-        $managerRole->givePermissionTo(['manage orders', 'manage inventory', 'view activities', 'handle approvals']);
-        $staffRole->givePermissionTo(['manage orders', 'manage inventory']);
+        $adminRole->syncPermissions(Permission::all());
+        $managerRole->syncPermissions(['manage orders', 'manage inventory', 'view activities', 'handle approvals', 'manage sales', 'manage stock']);
+        $staffRole->syncPermissions(['manage orders', 'manage inventory', 'manage sales']);
 
-        // 2. Dummy Users
-        $admin = User::factory()->create([
+        // 2. Settings (Default)
+        Setting::updateOrCreate(['key' => 'company_name'], ['value' => 'PT. Operra Solusi Digital']);
+        Setting::updateOrCreate(['key' => 'company_address'], ['value' => 'Jl. Teknologi No. 1, Jakarta']);
+        Setting::updateOrCreate(['key' => 'company_phone'], ['value' => '021-12345678']);
+        Setting::updateOrCreate(['key' => 'company_email'], ['value' => 'info@operra.site']);
+        Setting::updateOrCreate(['key' => 'currency'], ['value' => 'IDR']);
+
+        // 3. Warehouses
+        $mainWh = Warehouse::create(['name' => 'Gudang Utama', 'location' => 'Jakarta']);
+        $subWh = Warehouse::create(['name' => 'Gudang Cabang', 'location' => 'Bandung']);
+
+        // 4. Products
+        $p1 = Product::create([
+            'name' => 'MacBook Pro M3',
+            'sku' => 'LAP-MBP-M3',
+            'description' => 'Laptop Apple terbaru',
+            'purchase_price' => 22000000,
+            'selling_price' => 28000000,
+            'min_stock' => 5
+        ]);
+        $p2 = Product::create([
+            'name' => 'iPhone 15 Pro',
+            'sku' => 'PHN-I15P',
+            'description' => 'Smartphone Apple terbaru',
+            'purchase_price' => 18000000,
+            'selling_price' => 21000000,
+            'min_stock' => 10
+        ]);
+
+        // 5. Customers & Suppliers
+        $cust = Customer::create(['name' => 'Budi Santoso', 'email' => 'budi@gmail.com', 'phone' => '08123456789', 'address' => 'Surabaya']);
+        $supp = Supplier::create(['name' => 'Apple Distributor Indo', 'contact_person' => 'Andi', 'phone' => '021-88888', 'address' => 'Jakarta']);
+
+        // 6. Sales Order & Invoice
+        $so = SalesOrder::create([
+            'so_number' => 'SO-20260106-001',
+            'customer_id' => $cust->id,
+            'order_date' => now(),
+            'total_amount' => 28000000,
+            'status' => 'confirmed'
+        ]);
+
+        Invoice::create([
+            'invoice_number' => 'INV-20260106-001',
+            'sales_order_id' => $so->id,
+            'due_date' => now()->addDays(7),
+            'total_amount' => 28000000,
+            'payment_status' => 'unpaid'
+        ]);
+
+        // 7. Stock Movements
+        StockMovement::create([
+            'product_id' => $p1->id,
+            'warehouse_id' => $mainWh->id,
+            'quantity' => 20,
+            'type' => 'in',
+            'reference' => 'Initial Stock'
+        ]);
+
+        // 8. Legacy Data (Keeping for compatibility)
+        User::updateOrCreate(['email' => 'admin@example.com'], [
             'name' => 'Admin User',
-            'email' => 'admin@example.com',
             'password' => Hash::make('password'),
-        ]);
-        $admin->assignRole($adminRole);
+        ])->assignRole($adminRole);
 
-        $manager = User::factory()->create([
+        User::updateOrCreate(['email' => 'manager@example.com'], [
             'name' => 'Manager User',
-            'email' => 'manager@example.com',
             'password' => Hash::make('password'),
-        ]);
-        $manager->assignRole($managerRole);
+        ])->assignRole($managerRole);
 
-        $staff = User::factory()->create([
+        User::updateOrCreate(['email' => 'staff@example.com'], [
             'name' => 'Staff User',
-            'email' => 'staff@example.com',
             'password' => Hash::make('password'),
-        ]);
-        $staff->assignRole($staffRole);
-
-        // 3. Dummy Orders
-        Order::create(['order_number' => 'ORD-001', 'customer_name' => 'John Doe', 'total_amount' => 1500000, 'status' => 'completed']);
-        Order::create(['order_number' => 'ORD-002', 'customer_name' => 'Jane Smith', 'total_amount' => 750000, 'status' => 'pending']);
-        Order::create(['order_number' => 'ORD-003', 'customer_name' => 'Budi Utomo', 'total_amount' => 2000000, 'status' => 'processing']);
-
-        // 4. Dummy Inventory
-        Inventory::create(['item_name' => 'MacBook Pro M2', 'sku' => 'LAP-MBP-M2', 'stock_quantity' => 15, 'unit_price' => 25000000]);
-        Inventory::create(['item_name' => 'Logitech MX Master 3S', 'sku' => 'ACC-LOGI-MX', 'stock_quantity' => 50, 'unit_price' => 1500000]);
-        Inventory::create(['item_name' => 'Dell UltraSharp 27"', 'sku' => 'MON-DELL-U27', 'stock_quantity' => 10, 'unit_price' => 8000000]);
-
-        // 5. Dummy Staff Activities
-        StaffActivity::create(['user_id' => $staff->id, 'activity_type' => 'inventory_update', 'description' => 'Updated stock for MacBook Pro M2']);
-        StaffActivity::create(['user_id' => $manager->id, 'activity_type' => 'order_approval', 'description' => 'Approved order ORD-001']);
-
-        // 6. Dummy Approvals
-        Approval::create(['request_type' => 'expense', 'requester_id' => $staff->id, 'approver_id' => $manager->id, 'status' => 'approved', 'notes' => 'Travel expense for client meeting']);
-        Approval::create(['request_type' => 'discount', 'requester_id' => $staff->id, 'status' => 'pending', 'notes' => 'Request 10% discount for bulk order']);
-
-        // 7. Dummy Subscriptions
-        Subscription::create(['plan_name' => 'Basic Plan', 'monthly_price' => 500000, 'active_customers' => 45, 'mrr' => 22500000]);
-        Subscription::create(['plan_name' => 'Pro Plan', 'monthly_price' => 1500000, 'active_customers' => 12, 'mrr' => 18000000]);
-
-        // 8. Dummy AI Usage
-        AiUsage::create(['model_name' => 'gpt-4o', 'tokens_used' => 15000, 'estimated_cost' => 0.45, 'usage_time' => now()]);
-        AiUsage::create(['model_name' => 'claude-3-5-sonnet', 'tokens_used' => 8500, 'estimated_cost' => 0.12, 'usage_time' => now()->subHours(2)]);
+        ])->assignRole($staffRole);
     }
 }

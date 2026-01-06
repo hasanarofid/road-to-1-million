@@ -121,22 +121,61 @@ onMounted(() => {
                 class="text-xs uppercase py-3 font-bold block transition-colors duration-200"
                 :class="route().current('dashboard') ? 'text-operra-500 hover:text-operra-600' : 'text-gray-700 dark:text-gray-300 hover:text-operra-500'"
               >
-                <i class="fas fa-tv mr-2 text-sm" :class="route().current('dashboard') ? 'opacity-100' : 'opacity-75'"></i>
                 Dashboard
               </Link>
             </li>
+
+            <!-- Master Data Section -->
+            <hr class="my-4 md:min-w-full" />
+            <h6 class="md:min-w-full text-gray-500 text-xs uppercase font-bold block pt-1 pb-4 no-underline">
+              Master Data
+            </h6>
             <li class="items-center">
-                <Link :href="route('orders.index')" 
-                    class="text-xs uppercase py-3 font-bold block transition-colors duration-200"
-                    :class="route().current('orders.*') ? 'text-operra-500 hover:text-operra-600' : 'text-gray-700 dark:text-gray-300 hover:text-operra-500'">
-                    Orders
+                <Link :href="route('master.products.index')" 
+                    class="text-xs uppercase py-2 font-bold block transition-colors duration-200"
+                    :class="route().current('master.products.*') ? 'text-operra-500' : 'text-gray-700 dark:text-gray-300 hover:text-operra-500'">
+                    Products
                 </Link>
             </li>
             <li class="items-center">
-                <Link :href="route('inventory.index')" 
-                    class="text-xs uppercase py-3 font-bold block transition-colors duration-200"
-                    :class="route().current('inventory.*') ? 'text-operra-500 hover:text-operra-600' : 'text-gray-700 dark:text-gray-300 hover:text-operra-500'">
-                    Inventory
+                <Link :href="route('master.customers.index')" 
+                    class="text-xs uppercase py-2 font-bold block transition-colors duration-200"
+                    :class="route().current('master.customers.*') ? 'text-operra-500' : 'text-gray-700 dark:text-gray-300 hover:text-operra-500'">
+                    Customers
+                </Link>
+            </li>
+            <li class="items-center">
+                <Link :href="route('master.suppliers.index')" 
+                    class="text-xs uppercase py-2 font-bold block transition-colors duration-200"
+                    :class="route().current('master.suppliers.*') ? 'text-operra-500' : 'text-gray-700 dark:text-gray-300 hover:text-operra-500'">
+                    Suppliers
+                </Link>
+            </li>
+            <li class="items-center">
+                <Link :href="route('master.warehouses.index')" 
+                    class="text-xs uppercase py-2 font-bold block transition-colors duration-200"
+                    :class="route().current('master.warehouses.*') ? 'text-operra-500' : 'text-gray-700 dark:text-gray-300 hover:text-operra-500'">
+                    Warehouses
+                </Link>
+            </li>
+
+            <!-- Sales Section -->
+            <hr class="my-4 md:min-w-full" />
+            <h6 class="md:min-w-full text-gray-500 text-xs uppercase font-bold block pt-1 pb-4 no-underline">
+              Sales & Inventory
+            </h6>
+            <li class="items-center">
+                <Link :href="route('sales.orders.index')" 
+                    class="text-xs uppercase py-2 font-bold block transition-colors duration-200"
+                    :class="route().current('sales.orders.*') ? 'text-operra-500' : 'text-gray-700 dark:text-gray-300 hover:text-operra-500'">
+                    Sales Orders
+                </Link>
+            </li>
+            <li class="items-center">
+                <Link :href="route('stock.movements.index')" 
+                    class="text-xs uppercase py-2 font-bold block transition-colors duration-200"
+                    :class="route().current('stock.movements.*') ? 'text-operra-500' : 'text-gray-700 dark:text-gray-300 hover:text-operra-500'">
+                    Stock Movements
                 </Link>
             </li>
           </ul>
@@ -150,8 +189,17 @@ onMounted(() => {
           <ul class="md:flex-col md:min-w-full flex flex-col list-none md:mb-4">
             <li class="items-center">
               <Link
+                :href="route('settings.index')"
+                class="text-xs uppercase py-2 font-bold block transition-colors duration-200"
+                :class="route().current('settings.index') ? 'text-operra-500' : 'text-gray-700 dark:text-gray-300 hover:text-operra-500'"
+              >
+                Company Settings
+              </Link>
+            </li>
+            <li class="items-center">
+              <Link
                 :href="route('profile.edit')"
-                class="text-gray-700 dark:text-gray-300 hover:text-operra-500 text-xs uppercase py-3 font-bold block transition-colors duration-200"
+                class="text-gray-700 dark:text-gray-300 hover:text-operra-500 text-xs uppercase py-2 font-bold block transition-colors duration-200"
               >
                 Profile Settings
               </Link>
